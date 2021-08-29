@@ -209,6 +209,7 @@ button:active {
     text-align: center;
     align-self: center;
     color: white;
+    text-shadow: 4px 4px 2px black;
     font-size: 10rem;
     font-weight: bolder;
     display: flex;
