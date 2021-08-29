@@ -10,6 +10,7 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const snap = document.getElementById("snap");
 
+
 window.addEventListener('scroll', () =>{
     //console.log(imagesContainer.style.height, window.innerHeight * 0.89);
     setSizeTo720p();
@@ -28,6 +29,9 @@ StartButton.addEventListener("click",
         }
         
         document.getElementById("video-wrap").style.display = 'flex';
+        setTimeout(function(){ 
+            document.getElementById("instructions").classList.add('fadeOut'); 
+        }, 10000);
         //document.getElementById("montaje").play();
     }
 );
@@ -211,7 +215,7 @@ snap.addEventListener("click",
             timer.innerHTML = seconds;
 
             if (seconds == 0) {
-                timer.innerHTML = "¡ Sonrie !";
+                timer.innerHTML = "¡ Una sonrisa !";
                 
                 clearInterval(countdown);
                 }
