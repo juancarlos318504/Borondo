@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FotografiAR</title>
+    <link rel="manifest" href="/manifest.json">
+    
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <script src="http://hongru.github.io/proj/canvas2image/canvas2image.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/Animations.css">
+    <link rel="stylesheet" href="./Fonts/stylesheet.css" type="text/css" charset="utf-8" />
+
+</head>
+
+    <div style="width: 100vw; height: 100vh;" id="application">
+        <div id="loader-landing">
+            <h2 style="color: var(--orange-color); " class="fadeIn first">Borondo</h2>
+            <h5 style="color: var(--blue-color);" class="fadeIn second">De paseo por nuestro patrimonio</h5>
+            <div id="ventana-loader" class="fadeIn third">
+                <img src="./Images/Icon2.png" style="width: 50%; height: 70%; object-fit: contain;">
+                <button id="button-start" type="button">Iniciar</button>
+            </div>
+                        
+        </div>
+    
+        
+        <!-- Stream video via webcam -->
+        <div id="video-wrap" style="display: none;" class="video-wrap fadeInDown"> 
+
+            <video id="video" width="1280" height="720" playsinline autoplay class="o-video fadeIn second"></video>
+
+            <div id="images-container" class="o-video" style="overflow: hidden; ">
+                <div id="gesture-area" style="width: 100%; height: 100%;">
+                    <img id="montaje" class="resize-drag" src="Images/Palabrero_Saludando.png" >
+                </div>
+
+                <img id="logo" src="Images/LOGOS-02.png"/>
+            </div>
+            
+            <div id="timer" class="fadeIn third"><div id="timer_count"></div></div>
+    
+            <div id="buttons-container" class="fadeIn fourth">
+                <button id="size-button" class=" boton-funciones"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
+                        <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                </button>
+                <button id="snap" class=" mx-3"> <img src="Images/camera.png" style="height: 70%; object-fit: contain;"></button>
+                <button id="reverse-button" class=" boton-funciones"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                    </svg>    
+                </button>
+            </div>
+            
+            
+        </div>
+    
+        
+        <!-- Webcam video snapshot -->
+        <canvas id="canvas" width="1280" height="720" ></canvas>
+        <a id="link"></a>
+
+        
+    </div>
+
+    <div id="warning" >
+        <img src="./Images/Logov2.png" style="width: 80%; ">
+        <h3 style="color: var(--blue-color); margin-top: 1.5rem;">¡ Por favor rota tu dispositivo horizontalmente !</h3>
+    </div>
+    
+</body>
+
+<script type="text/javascript" src="Js/screenshot.js"></script>
+<script type="module">
+    import interact from 
+    'https://cdn.interactjs.io/v1.10.11/interactjs/index.js'
+
+    
+    
+    
+
+    function dragMoveListener (event) {
+    var target = event.target
+    // keep the dragged position in the data-x/data-y attributes
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+    // translate the element
+    target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x)
+    target.setAttribute('data-y', y)
+    }
+
+    // this function is used later in the resizing and gesture demos
+    window.dragMoveListener = dragMoveListener
+
+    
+
+
+    
+
+    var angleScale = {
+        angle: 0,
+        scale: 1
+    }
+    var gestureArea = document.getElementById('gesture-area')
+    var scaleElement = document.getElementById('montaje')
+    var resetTimeout
+
+
+    interact(gestureArea)
+    .gesturable({
+        listeners: {
+        start (event) {
+            angleScale.angle -= event.angle
+
+            clearTimeout(resetTimeout)
+            scaleElement.classList.remove('reset')
+        },
+        move (event) {
+            // document.body.appendChild(new Text(event.scale))
+            var currentAngle = event.angle + angleScale.angle
+            var currentScale = event.scale * angleScale.scale
+
+            scaleElement.style.transform =
+            'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
+
+            // uses the dragMoveListener from the draggable demo above
+            dragMoveListener(event)
+        },
+        end (event) {
+            angleScale.angle = angleScale.angle + event.angle
+            angleScale.scale = angleScale.scale * event.scale
+
+            //resetTimeout = setTimeout(reset, 1000)
+            scaleElement.classList.add('reset')
+        }
+        }
+    })
+    .draggable({
+        listeners: { move: dragMoveListener }
+    })
+
+    function reset () {
+        scaleElement.style.transform = 'scale(1)'
+
+        angleScale.angle = 0
+        angleScale.scale = 1
+    }
+
+    
+</script>
+</html>

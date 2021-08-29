@@ -1,0 +1,260 @@
+:root {
+    --orange-color: #F26722;
+    --blue-color: #149B9E;
+}
+
+
+html {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    height: 100%;
+    position: fixed;
+    /* prevent overscroll bounce*/
+    background-color: white;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    /* iOS velocity scrolling */
+
+    font-family: 'granstander_cleanregular' !important;
+}
+
+.resize-drag {
+    width: 120px;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 1rem;
+    font-family: sans-serif;
+    touch-action: none;
+  
+    /* This makes things *much* easier */
+    box-sizing: border-box;
+  }
+
+#loader-landing {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*background-color: rgba(0, 0, 0, 0.95);*/
+    background-color: white;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#ventana-loader{
+    width: 70%;
+    height: 60%;
+    background-image: url('../Images/Ventana1.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button{
+    animation: moveInBottom 2s ease-out;
+    animation-fill-mode: backwards;
+    color: white;
+    border: none;
+}
+
+button:focus {
+    border: none;
+    outline: none;
+}
+
+button:active {
+    transform: translateY(5px);
+}
+
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+#button-start{
+    width: 10em;
+    height: 10em;
+    margin:  0 2rem;
+    border: none;
+    background-color: transparent;
+    background-image: url('../Images/Button1.png');
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.video-wrap{
+    width: 100%;
+    height: 100%; 
+    max-width: 100vw;
+    max-height: 100vh;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    padding: 1em;
+    background-image: url("../Images/fondo.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.o-video{
+    max-width: 90%;
+    max-height: 90%;
+    width: 1280;
+    height: 720;
+    position: absolute;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+}
+
+#video{
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+#montaje{
+    object-fit: contain;
+    
+    transform: scale(4);
+    bottom: 20%;
+    left: 12%;
+}
+
+
+#logo{
+    position: absolute;
+    width: 20%;
+    object-fit: contain;
+    z-index: 1000;
+    bottom: .5rem;
+    right: 1rem;
+}
+
+
+#buttons-container{
+
+    width: 80%;
+    position: absolute;
+    bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 3000;
+    pointer-events: none;
+}
+
+#snap{
+    pointer-events: auto;
+    background-color: var(--orange-color);
+    width: 16vh;
+    height: 16vh;
+    border-radius: 50%;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.1em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    object-fit: contain;
+}
+
+.boton-funciones{
+    background-color: var(--blue-color);
+    pointer-events: auto;
+    width: 12vh;
+    height: 12vh;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    font-weight: bolder;
+}
+
+#timer{
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    text-align: center;
+    align-self: center;
+    color: white;
+    font-size: 10rem;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+#warning{
+    text-align: center; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    vertical-align: middle; 
+    height: 100vh; 
+    padding: 2em; 
+    font-size: 1.5em;
+}
+
+#canvas{
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    #timer {
+        font-size: 3rem;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    #application{
+        display: block;
+    }
+    #warning{
+        display: none;
+    }
+}
+
+@media screen and (orientation:portrait) {
+    #application{
+        display: none;
+    }
+
+    #warning{
+        display: block;
+    }
+}
