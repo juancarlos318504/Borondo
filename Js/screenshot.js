@@ -211,7 +211,7 @@ snap.addEventListener("click",
             timer.innerHTML = seconds;
 
             if (seconds == 0) {
-                timer.innerHTML = "¡ Sonríe !";
+                timer.innerHTML = "¡ Sonrie !";
                 
                 clearInterval(countdown);
                 }
